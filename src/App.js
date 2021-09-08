@@ -14,6 +14,7 @@ function App() {
     error,
     correct,
     handleNextQuestion,
+    correctAnswer,
   } = useGlobalContext();
 
   if (waiting) {
@@ -35,15 +36,17 @@ function App() {
         </p>
         <article className="container">
           <h2 dangerouslySetInnerHTML={{ __html: question }} />
-          {/* <div className="btn-container"> */}
-          {answers.map((answer, index) => {
-            return (
-              <button
-                className="answer-btn"
-                dangerouslySetInnerHTML={{ __html: answer }}
-              />
-            );
-          })}
+          <div className="btn-container">
+            {answers.map((answer, index) => {
+              return (
+                <button
+                  className="answer-btn"
+                  onClick={() => correctAnswer(correct_answer === answer)}
+                  dangerouslySetInnerHTML={{ __html: answer }}
+                />
+              );
+            })}
+          </div>
         </article>
         <button className="next-question" onClick={handleNextQuestion}>
           next question

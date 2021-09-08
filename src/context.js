@@ -59,6 +59,16 @@ const AppProvider = ({ children }) => {
     });
   };
 
+  const correctAnswer = (value) => {
+    if (value) {
+      setCorrect((prevValue) => {
+        const newValue = prevValue + 1;
+        return newValue;
+      });
+    }
+    handleNextQuestion();
+  };
+
   useEffect(() => {
     fetchQuestions(tempUrl);
   }, []);
@@ -74,6 +84,7 @@ const AppProvider = ({ children }) => {
         error,
         isModalOpen,
         handleNextQuestion,
+        correctAnswer,
       }}
     >
       {children}
