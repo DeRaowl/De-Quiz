@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useContext, useEffect } from "react";
+import Modal from "./Modal";
 
 const table = {
   sports: 21,
@@ -19,7 +20,7 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [waiting, setWaiting] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [question, setQuestion] = useState([]);
+  const [questions, setQuestions] = useState([]);
   const [index, setIndex] = useState(0);
   const [correct, setCorrect] = useState(0);
   const [error, setError] = useState(false);
@@ -33,7 +34,7 @@ const AppProvider = ({ children }) => {
     if (response) {
       const data = response.data.results;
       if (data.length > 0) {
-        setQuestion(data);
+        setQuestions(data);
         setWaiting(false);
         setLoading(false);
         setError(false);
@@ -46,19 +47,40 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const handleNextQuestion = () => {
+    setIndex((prevValue) => {
+      let newIndex = prevValue + 1;
+      if (newIndex > questions.length - 1) {
+        // setIsModelOpen(true);
+        return 0;
+      } else {
+        return newIndex;
+      }
+    });
+  };
+
   useEffect(() => {
     fetchQuestions(tempUrl);
   }, []);
 
   return (
     <AppContext.Provider
-      value={{ loading, waiting, question, index, correct, error, isModalOpen }}
+      value={{
+        loading,
+        waiting,
+        questions,
+        index,
+        correct,
+        error,
+        isModalOpen,
+        handleNextQuestion,
+      }}
     >
       {children}
     </AppContext.Provider>
   );
 };
-// make sure use
+
 export const useGlobalContext = () => {
   return useContext(AppContext);
 };
