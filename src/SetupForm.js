@@ -8,7 +8,7 @@ const SetupForm = () => {
     <main>
       <section className="quiz quiz-small">
         <form onSubmit={handleSubmit} className="setup-form">
-          <h2>De Quiz</h2>
+          <h2>De - Quiz</h2>
           <div className="form-control">
             <label htmlFor="amount">Number of Questions</label>
             <input
@@ -56,7 +56,9 @@ const SetupForm = () => {
             </p>
           )}
         </form>
-        <button className="submit-btn">Let's Start</button>
+        <button className="submit-btn" onClick={handleSubmit}>
+          Let's Start
+        </button>
       </section>
     </main>
   );
